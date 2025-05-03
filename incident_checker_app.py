@@ -13,12 +13,12 @@ MODELS = {
 
 VAGUE_TERMS = {
     "English": ["something went wrong", "issue occurred", "problem happened"],
-    "Portuguese": ["algo deu errado", "ocorreu um problema", "houve uma falha"]
+    "Portuguese": ["algo correu mal", "ocorreu um problema", "houve uma falha"]
 }
 
 REQUIRED_ENTITIES = {
     "English": ["DATE", "TIME", "ORG", "GPE"],
-    "Portuguese": ["DATE", "TIME", "ORG", "LOC"]  # Adapted for Portuguese
+    "Portuguese": ["DATA", "TEMPO", "ORG", "LOC"]  # Adapted for Portuguese
 }
 
 def extract_text_from_docx(file):
@@ -101,9 +101,14 @@ if st.button("Check Compliance") and texts:
     st.subheader("Evaluation Results Table")
     st.dataframe(df)
 
+    excel_buffer = io.BytesIO()
+    df.to_excel(excel_buffer, index=True, engine="openpyxl")
+    excel_buffer.seek(0)  # Rewind the buffer
+
+    # Download button
     st.download_button(
         label="Download Results as Excel",
-        data=df.to_excel(index=True, engine="openpyxl"),
+        data=excel_buffer,
         file_name="compliance_results.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
