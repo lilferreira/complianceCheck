@@ -101,18 +101,6 @@ if st.button("Check Compliance") and texts:
     st.subheader("Evaluation Results Table")
     st.dataframe(df)
 
-    excel_buffer = io.BytesIO()
-    df.to_excel(excel_buffer, index=True, engine="openpyxl")
-    excel_buffer.seek(0)  # Rewind the buffer
-
-    # Download button
-    st.download_button(
-        label="Download Results as Excel",
-        data=excel_buffer,
-        file_name="compliance_results.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-
     st.subheader("Inline Highlights")
     for name, text in texts:
         st.markdown(f"### Report: {name}")
