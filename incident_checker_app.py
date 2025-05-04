@@ -7,6 +7,13 @@ from io import StringIO
 from docx import Document
 import re
 
+def ensure_spacy_model(model):
+    if not is_package(model):
+        subprocess.run(["python", "-m", "spacy", "download", model])
+
+ensure_spacy_model("en_core_web_sm")
+ensure_spacy_model("pt_core_news_sm")
+
 # Load both language models
 MODELS = {
     "English": spacy.load("en_core_web_sm"),
