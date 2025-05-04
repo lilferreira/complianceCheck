@@ -90,7 +90,7 @@ elif option == "Upload File":
             continue
         texts.append((file.name, content))
 
-if st.button("Check Compliance") 
+if st.button("Check Compliance"):
     if texts:
         results = []
         for name, text in texts:
