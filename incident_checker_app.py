@@ -7,14 +7,6 @@ from io import StringIO
 from docx import Document
 import re
 
-def ensure_spacy_model(model):
-    if not is_package(model):
-        subprocess.run(["python", "-m", "spacy", "download", model])
-
-ensure_spacy_model("en_core_web_sm")
-ensure_spacy_model("pt_core_news_sm")
-
-
 # Load both language models
 MODELS = {
     "English": spacy.load("en_core_web_sm"),
@@ -23,7 +15,7 @@ MODELS = {
 
 VAGUE_TERMS = {
     "English": ["something went wrong", "issue occurred", "problem happened"],
-    "Portuguese": ["algo deu errado", "ocorreu um problema", "houve uma falha"]
+    "Portuguese": ["algo correu mal", "ocorreu um problema", "houve uma falha"]
 }
 
 REQUIRED_ENTITIES = {
@@ -108,9 +100,16 @@ if st.button("Check Compliance"):
             res["Report"] = name
             results.append(res)
 
-        df = pd.DataFrame(results).set_index("Report")
-        st.subheader("Evaluation Results Table")
-        st.dataframe(df)
+    df = pd.DataFrame(results).set_index("Report")
+    st.subheader("Evaluation Results Table")
+    st.dataframe(df)
+
+    st.download_button(
+        label="Download Results as Excel",
+        data=df.to_excel(index=True, engine="openpyxl"),
+        file_name="compliance_results.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
         st.subheader("Inline Highlights")
         for name, text in texts:
@@ -119,5 +118,5 @@ if st.button("Check Compliance"):
             html = highlight_violations(text, result, language)
             st.markdown(html, unsafe_allow_html=True)
 
-else:
+elif st.button("Check Compliance"):
     st.warning("Please input or upload at least one report.")
