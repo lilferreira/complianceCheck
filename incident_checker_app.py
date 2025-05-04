@@ -13,7 +13,7 @@ MODELS = {
 
 VAGUE_TERMS = {
     "English": ["something went wrong", "issue occurred", "problem happened"],
-    "Portuguese": ["algo deu errado", "ocorreu um problema", "houve uma falha"]
+    "Portuguese": ["algo correu mal", "ocorreu um problema", "houve uma falha"]
 }
 
 REQUIRED_ENTITIES = {
