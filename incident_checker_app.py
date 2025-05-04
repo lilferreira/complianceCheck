@@ -102,12 +102,12 @@ if st.button("Check Compliance"):
         st.subheader("Evaluation Results Table")
         st.dataframe(df)
 
-        st.download_button(
-            label="Download Results as Excel",
-            data=df.to_excel(index=True, engine="openpyxl"),
-            file_name="compliance_results.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
+        #st.download_button(
+            #label="Download Results as Excel",
+            #data=df.to_excel(index=True, engine="openpyxl"),
+            #file_name="compliance_results.xlsx",
+            #mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        #)
 
         st.subheader("Inline Highlights")
         for name, text in texts:
