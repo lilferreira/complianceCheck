@@ -100,30 +100,24 @@ elif option == "Upload File":
             continue
         texts.append((file.name, content))
 
-if st.button("Check Compliance") and texts:
-    results = []
-    for name, text in texts:
-        res = evaluate_report(text, language)
-        res["Report"] = name
-        results.append(res)
+if st.button("Check Compliance"):
+    if texts:
+        results = []
+        for name, text in texts:
+            res = evaluate_report(text, language)
+            res["Report"] = name
+            results.append(res)
 
-    df = pd.DataFrame(results).set_index("Report")
-    st.subheader("Evaluation Results Table")
-    st.dataframe(df)
+        df = pd.DataFrame(results).set_index("Report")
+        st.subheader("Evaluation Results Table")
+        st.dataframe(df)
 
-    st.download_button(
-        label="Download Results as Excel",
-        data=df.to_excel(index=True, engine="openpyxl"),
-        file_name="compliance_results.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+        st.subheader("Inline Highlights")
+        for name, text in texts:
+            st.markdown(f"### Report: {name}")
+            result = evaluate_report(text, language)
+            html = highlight_violations(text, result, language)
+            st.markdown(html, unsafe_allow_html=True)
 
-    st.subheader("Inline Highlights")
-    for name, text in texts:
-        st.markdown(f"### Report: {name}")
-        result = evaluate_report(text, language)
-        html = highlight_violations(text, result, language)
-        st.markdown(html, unsafe_allow_html=True)
-
-elif st.button("Check Compliance"):
+else:
     st.warning("Please input or upload at least one report.")
