@@ -18,7 +18,7 @@ VAGUE_TERMS = {
 
 REQUIRED_ENTITIES = {
     "English": ["DATE", "TIME", "ORG", "GPE"],
-    "Portuguese": ["DATA", "TEMPO", "ORG", "LOC"]  # Adapted for Portuguese
+    "Portuguese": ["DATE", "TIME", "ORG", "LOC"]  # Adapted for Portuguese
 }
 
 def extract_text_from_docx(file):
